@@ -2,8 +2,6 @@ package com.zmj.demo.controller;
 
 import java.util.List;
 
-import com.zmj.demo.config.SessionFactoryConfig;
-import com.zmj.demo.config.SessionSingleton;
 import com.zmj.demo.domain.Customer;
 import com.zmj.demo.domain.Result;
 import com.zmj.demo.handle.ExceptionHandle;
@@ -13,7 +11,6 @@ import com.zmj.demo.utils.ResultUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

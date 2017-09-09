@@ -15,10 +15,10 @@ spring:
     show-sql: true
 
 # Mybatis配置
-mybatis:
+#mybatis:
   # 配置映射类所在包名
-  type-aliases-package: com.zmj.demo.domain
-  mapper-locations: classpath*:**/mapper/*.xml
+#  type-aliases-package: com.zmj.demo.domain
+#  mapper-locations: classpath:mapper/*.xml
   # 配置mapper xml文件所在路径，这里是一个数组
 # mybatis.config：mybatis-config.xml配置文件的路径
 # mybatis.typeHandlersPackage：扫描typeHandlers的包
