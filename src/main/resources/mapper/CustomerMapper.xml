@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zmj.demo.mapper.CustomerMapper">
+    <!--    该映射对应的模型    -->
+    <resultMap id="CustomerResult"  type="com.zmj.demo.domain.Customer">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+
+    <!--    DAO中对应的方法selectAll，选择所有的用户信息   -->
+    <select id="selectAll" resultMap="CustomerResult" useCache="true">
+        SELECT * FROM t_customer WHERE 1=1
+    </select>
+
+    <!--    DAO中findOneWithID, 根据ID选择用户 -->
+    <select id="findOneWithID" resultMap="CustomerResult" parameterType="int" useCache="true">
+        SELECT * FROM t_customer WHERE id=#{id, jdbcType = INTEGER} and 1=1
+    </select>
+
+    <!--    DAO中insertCustomer，增加用户 -->
+    <insert id="insertCustomer" parameterType="com.zmj.demo.domain.Customer">
+        INSERT INTO t_customer (name, gender, email, phone, description) VALUES (#{name}, #{gender}, #{email}, #{phone}, #{description})
+    </insert>
+
+    <!--    DAO中updateCustomer，更新用户 -->
+    <update id="updateCustomer" parameterType="com.zmj.demo.domain.Customer">
+        UPDATE t_customer SET name = #{name}, gender = #{gender}, email = #{email}, phone = #{phone}, description = #{description} WHERE id = #{id}
+    </update>
+
+    <!--    DAO中deleteCustomerWithID,根据ID删除用户   -->
+    <delete id="deleteCustomerWithID" parameterType="int">
+        DELETE FROM t_customer WHERE id = #{id}
+    </delete>
+
+    <!--    DAO中findCustomersByName，根据名字查找用户信息  -->
+    <select id="findCustomersByName" parameterType="java.lang.String">
+        SELECT * FROM t_customer WHERE name like %#{name}%
+    </select>
+
+    <!--    DAO中findCustomersByGender，根据性别查找用户信息    -->
+    <select id="findCustomersByGender" parameterType="java.lang.String">
+        SELECT * FROM t_customer where gender like %#{gender}%
+    </select>
+</mapper>
