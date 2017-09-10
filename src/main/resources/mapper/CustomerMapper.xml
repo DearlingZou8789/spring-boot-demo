@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zmj.demo.mapper.CustomerMapper">
+    <cache readOnly="true" size="500" flushInterval="120000" eviction="LRU" />
     <!--    该映射对应的模型    -->
     <resultMap id="CustomerResult"  type="com.zmj.demo.domain.Customer">
         <id column="id" jdbcType="INTEGER" property="id"/>
@@ -38,12 +39,12 @@
     </delete>
 
     <!--    DAO中findCustomersByName，根据名字查找用户信息  -->
-    <select id="findCustomersByName" parameterType="java.lang.String">
-        SELECT * FROM customer WHERE name like %#{name}%
+    <select id="findCustomersByName">
+        SELECT * FROM customer WHERE name like '%${name}%'
     </select>
 
     <!--    DAO中findCustomersByGender，根据性别查找用户信息    -->
-    <select id="findCustomersByGender" parameterType="java.lang.String">
-        SELECT * FROM customer where gender like %#{gender}%
+    <select id="findCustomersByGender">
+        SELECT * FROM customer where gender like '%${gender}%'
     </select>
 </mapper>

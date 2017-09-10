@@ -10,18 +10,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc   //调用API请求数据
-public class CustomerControllerTest {
+@AutoConfigureMockMvc
+public class CustomerController1Test {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void customerList() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/v2/customers")).andExpect(MockMvcResultMatchers.status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.get("/v3/customers")).andExpect(MockMvcResultMatchers.status().isOk());
     }
-
 }
