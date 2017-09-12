@@ -69,12 +69,17 @@ public class CustomerService1{
         return customerDao.findOneWithID(id);
     }
 
-    public int insertCustomer(Customer c) {
-        return  customerDao.insertCustomer(c);
+    public Customer insertCustomer(Customer c) {
+        int result = customerDao.insertCustomer(c);
+        if (result == 1) {
+            return customerDao.findLastInsertCustomer();
+        }
+        return null;
     }
 
-    public int updateCustomer(Customer c) {
-        return customerDao.updateCustomer(c);
+    public Customer updateCustomer(Customer c) {
+        customerDao.updateCustomer(c);
+        return customerDao.findOneWithID(c.getId());
     }
 
     public int deleteCustomerWithID(Integer id) {
@@ -87,5 +92,9 @@ public class CustomerService1{
 
     public List<Customer> findCustomersByGender(String gender) {
         return customerDao.findCustomersByGender(gender);
+    }
+
+    public Customer findLastCustomer() {
+        return customerDao.findLastInsertCustomer();
     }
 }

@@ -51,6 +51,7 @@ public class CustomerController {
     @ApiImplicitParam(name = "cus_a", value = "插入的用户信息", required = true, dataType = "Customer")
     @PostMapping(value = "/customers")
     //  直接将cus_a对象作为参数，插入数据库中
+    //  将body类型设置为form-data即可
     public Result<Customer> cutomerAdd(@Valid Customer cus_a, BindingResult bindingResult) {
         logger.info("我被调用了");
 
@@ -70,8 +71,12 @@ public class CustomerController {
     @ApiOperation(value = "查询用户", notes = "根据用户ID查询用户")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer", defaultValue = "1")
     @GetMapping(value = "/customers/{id}")
-    public  Customer findOneCustomer(@PathVariable("id") Integer id) {
-        return customerRepository.findOne(id);
+    public  Result<Customer> findOneCustomer(@PathVariable("id") Integer id) {
+        Customer cus = customerRepository.findOne(id);
+        if (cus != null){
+            return ResultUtil.success(cus);
+        }
+        return ResultUtil.error(100, "Have no such customer");
     }
 
     //  更新一个用户
@@ -85,9 +90,10 @@ public class CustomerController {
             @ApiImplicitParam(name = "desc", value = "描述信息", required = false, dataType = "String", defaultValue = "我就是小明同学", paramType = "form"),
     })
     @PutMapping(value = "/customers/{id}")
+    //  得将body类型设置为application/x-www-form-urlencoded
     //  @PathVariable   路径名称
     //  @RequestParam   请求参数
-    public Customer updateCustomer(@PathVariable("id") Integer id,
+    public Result<Customer> updateCustomer(@PathVariable("id") Integer id,
                                    @RequestParam("name") String name,
                                    @RequestParam("gender") String gender,
                                    @RequestParam("phone") String phone,
@@ -101,7 +107,11 @@ public class CustomerController {
         cus.setGender(gender);
         cus.setPhone(phone);
         cus.setEmail(email);
-        return customerRepository.save(cus);
+        Customer result = customerRepository.save(cus);
+        if (result != null){
+            return ResultUtil.success(result);
+        }
+        return ResultUtil.error(100, "update Customer " + id + "failure");
     }
 
     //  删除一个用户
@@ -122,8 +132,12 @@ public class CustomerController {
     @ApiOperation(value = "查询用户", notes = "根据用户名字查询用户")
     @ApiImplicitParam(name = "name", value = "用户名字", required = true, dataType = "String", defaultValue = "小明")
     @GetMapping(value = "/customers/name/{name}")
-    public List<Customer> customerByName(@PathVariable("name") String name){
-        return customerRepository.findByName(name);
+    public Result<List<Customer>> customerByName(@PathVariable("name") String name){
+        List<Customer> list = customerRepository.findByName(name);
+        if (list != null) {
+            return ResultUtil.success(list);
+        }
+        return ResultUtil.error(100, "No Customers named " + name);
     }
 
     //  调用服务写入数据

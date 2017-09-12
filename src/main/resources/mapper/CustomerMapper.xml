@@ -39,12 +39,17 @@
     </delete>
 
     <!--    DAO中findCustomersByName，根据名字查找用户信息  -->
-    <select id="findCustomersByName">
-        SELECT * FROM customer WHERE name like '%${name}%'
+    <select id="findCustomersByName" resultMap="CustomerResult" useCache="true" parameterType="string">
+        SELECT * FROM customer WHERE name like '%${_parameter}%'
     </select>
 
     <!--    DAO中findCustomersByGender，根据性别查找用户信息    -->
-    <select id="findCustomersByGender">
-        SELECT * FROM customer where gender like '%${gender}%'
+    <select id="findCustomersByGender" resultMap="CustomerResult" useCache="true" parameterType="string">
+        <!--   这里传字符串需要改成_parameter才会执行 -->
+        SELECT * FROM customer where gender like '%${_parameter}%'
+    </select>
+
+    <select id="findLastInsertCustomer" resultMap="CustomerResult">
+        SELECT * from customer ORDER by id DESC limit 1
     </select>
 </mapper>

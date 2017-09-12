@@ -66,8 +66,12 @@ public class CustomerController1 {
     @ApiOperation(value = "查询用户", notes = "根据用户ID查询用户")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer", defaultValue = "1")
     @GetMapping(value = "/customers/{id}")
-    public  Customer findOneCustomer(@PathVariable("id") Integer id) {
-        return customerService.findOne(id);
+    public  Result<Customer> findOneCustomer(@PathVariable("id") Integer id) {
+        Customer cus = customerService.findOne(id);
+        if (cus != null){
+            return ResultUtil.success(cus);
+        }
+        return ResultUtil.error(100, "Have no such customer");
     }
 
     //  更新一个用户
@@ -83,7 +87,7 @@ public class CustomerController1 {
     @PutMapping(value = "/customers/{id}")
     //  @PathVariable   路径名称
     //  @RequestParam   请求参数
-    public Customer updateCustomer(@PathVariable("id") Integer id,
+    public Result<Customer> updateCustomer(@PathVariable("id") Integer id,
                                    @RequestParam("name") String name,
                                    @RequestParam("gender") String gender,
                                    @RequestParam("phone") String phone,
@@ -97,8 +101,11 @@ public class CustomerController1 {
         cus.setGender(gender);
         cus.setPhone(phone);
         cus.setEmail(email);
-        customerService.updateCustomer(cus);
-        return cus;
+        Customer result = customerService.updateCustomer(cus);
+        if (result != null){
+            return ResultUtil.success(result);
+        }
+        return ResultUtil.error(100, "update Customer " + id + "failure");
     }
 
     //  删除一个用户
@@ -119,8 +126,12 @@ public class CustomerController1 {
     @ApiOperation(value = "查询用户", notes = "根据用户名字查询用户")
     @ApiImplicitParam(name = "name", value = "用户名字", required = true, dataType = "String", defaultValue = "小明")
     @GetMapping(value = "/customers/name/{name}")
-    public List<Customer> customerByName(@PathVariable("name") String name){
-        return customerService.findCustomersByName(name);
+    public Result<List<Customer>> customerByName(@PathVariable("name") String name){
+        List<Customer> list = customerService.findCustomersByName(name);
+        if (list != null) {
+            return ResultUtil.success(list);
+        }
+        return ResultUtil.error(100, "No Customers named " + name);
     }
 
     //  调用服务写入数据
@@ -149,6 +160,6 @@ public class CustomerController1 {
     @ApiImplicitParam(name = "gender", value = "用户性别", required = true, dataType = "String", defaultValue = "male")
     @GetMapping(value = "/customers/gender/{gender}")
     public void getGender(@PathVariable("gender") String gender) throws Exception{
-        customerService.getGender(gender);
+        customerService.findCustomersByGender(gender);
     }
 }
