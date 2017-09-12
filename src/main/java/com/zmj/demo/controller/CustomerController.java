@@ -132,8 +132,12 @@ public class CustomerController {
     @ApiOperation(value = "查询用户", notes = "根据用户名字查询用户")
     @ApiImplicitParam(name = "name", value = "用户名字", required = true, dataType = "String", defaultValue = "小明")
     @GetMapping(value = "/customers/name/{name}")
-    public List<Customer> customerByName(@PathVariable("name") String name){
-        return customerRepository.findByName(name);
+    public Result<List<Customer>> customerByName(@PathVariable("name") String name){
+        List<Customer> list = customerRepository.findByName(name);
+        if (list != null) {
+            return ResultUtil.success(list);
+        }
+        return ResultUtil.error(100, "No Customers named " + name);
     }
 
     //  调用服务写入数据

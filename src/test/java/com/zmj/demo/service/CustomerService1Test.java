@@ -42,13 +42,12 @@ public class CustomerService1Test {
     //  更新用户
     @Test
     public void updateCustomer(){
-        Customer cus = new Customer();
+        Customer cus = customerService1.findLastCustomer();
         cus.setName("小明，我是小明家");
         cus.setPhone("13013141578");
         cus.setEmail("xm@yahoo.com");
         cus.setGender("male");
         cus.setDescription("大家好，我是小明请来的测试人员");
-        cus.setId(27);
         Customer i = customerService1.updateCustomer(cus);
         Assert.assertEquals(i.getDescription(), cus.getDescription());
     }
@@ -56,7 +55,8 @@ public class CustomerService1Test {
     //  测试删除用户
     @Test
     public void deleteCustomer(){
-        int i = customerService1.deleteCustomerWithID(21);
+        Customer customer = customerService1.findLastCustomer();
+        int i = customerService1.deleteCustomerWithID(customer.getId());
         Assert.assertEquals(i, 1);
     }
 

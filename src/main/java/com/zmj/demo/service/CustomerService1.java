@@ -93,4 +93,8 @@ public class CustomerService1{
     public List<Customer> findCustomersByGender(String gender) {
         return customerDao.findCustomersByGender(gender);
     }
+
+    public Customer findLastCustomer() {
+        return customerDao.findLastInsertCustomer();
+    }
 }
