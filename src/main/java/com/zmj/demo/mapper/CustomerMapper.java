@@ -63,4 +63,10 @@ public interface CustomerMapper {
      * @return  查找到的用户信息
      */
     public List<Customer> findCustomersByGender(String gender);
+
+    /**
+     * 找到最后一条插入的数据
+     * @return  查找到最后一条用户信息
+     */
+    public Customer findLastInsertCustomer();
 }

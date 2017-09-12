@@ -33,8 +33,8 @@ public class CustomerService1Test {
         cus.setEmail("xm@yahoo.com");
         cus.setGender("male");
         cus.setDescription("大家好，我是小明请来的测试人员");
-        int i = customerService1.insertCustomer(cus);
-        Assert.assertEquals(i, 1);
+        Customer i = customerService1.insertCustomer(cus);
+        Assert.assertEquals(i.getName(), cus.getName());
     }
 
     //  更新用户
@@ -47,7 +47,7 @@ public class CustomerService1Test {
         cus.setGender("male");
         cus.setDescription("大家好，我是小明请来的测试人员");
         cus.setId(27);
-        int i = customerService1.updateCustomer(cus);
-        Assert.assertEquals(i, 1);
+        Customer i = customerService1.updateCustomer(cus);
+        Assert.assertEquals(i.getDescription(), cus.getDescription());
     }
 }

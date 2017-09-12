@@ -47,4 +47,8 @@
     <select id="findCustomersByGender">
         SELECT * FROM customer where gender like '%${gender}%'
     </select>
+
+    <select id="findLastInsertCustomer" resultMap="CustomerResult">
+        SELECT * from customer ORDER by id DESC limit 1
+    </select>
 </mapper>

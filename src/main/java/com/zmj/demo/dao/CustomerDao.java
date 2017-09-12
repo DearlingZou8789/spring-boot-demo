@@ -76,4 +76,12 @@ public class CustomerDao {
     public List<Customer> findCustomersByGender(String gender){
         return customerMapper.findCustomersByGender(gender);
     }
+
+    /**
+     * 查找最后一条插入的用户信息
+     * @return
+     */
+    public Customer findLastInsertCustomer() {
+        return customerMapper.findLastInsertCustomer();
+    }
 }
