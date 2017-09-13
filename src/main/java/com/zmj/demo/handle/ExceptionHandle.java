@@ -21,8 +21,9 @@ public class ExceptionHandle {
             CustomerException customerException = (CustomerException) e;
             return ResultUtil.error(customerException.getCode(), customerException.getMessage());
         }
-
+        e.printStackTrace();
         logger.info("系统异常");
-        return ResultUtil.error(100, "未知错误");
+//        return ResultUtil.error(100, "未知错误");
+        return ResultUtil.error(100, e.toString());
     }
 }

@@ -37,4 +37,9 @@ public class Result<T> {
     public T getData() {
         return data;
     }
+
+    @Override
+    public String toString() {
+        return "code" + getCode() + ",data: " + data.toString() + ", msg: " + getMsg();
+    }
 }

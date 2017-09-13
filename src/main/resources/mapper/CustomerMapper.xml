@@ -2,7 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zmj.demo.mapper.CustomerMapper">
+    <!--    Mybatis 缓存  -->
     <cache readOnly="true" size="500" flushInterval="120000" eviction="LRU" />
+
+    <!--    开启基于Redis的二级缓存      -->
+    <cache type="com.zmj.demo.cache.RedisCache"/>
+
     <!--    该映射对应的模型    -->
     <resultMap id="CustomerResult"  type="com.zmj.demo.domain.Customer">
         <id column="id" jdbcType="INTEGER" property="id"/>
@@ -29,7 +34,7 @@
     </insert>
 
     <!--    DAO中updateCustomer，更新用户 -->
-    <update id="updateCustomer" parameterType="com.zmj.demo.domain.Customer">
+    <update id="updateCustomer" parameterType="com.zmj.demo.domain.Customer" flushCache="true">
         UPDATE customer SET name = #{name}, gender = #{gender}, email = #{email}, phone = #{phone}, description = #{description} WHERE id = #{id}
     </update>
 
